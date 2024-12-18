@@ -9,6 +9,9 @@ public class OldInput : MonoBehaviour
 
     Rigidbody rb;
 
+    [HideInInspector]
+    public bool crouching, lookup;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -20,6 +23,9 @@ public class OldInput : MonoBehaviour
     {
         Move();
         Look();
+    }
+
+    void FixedUpdate() {
         Jump();
     }
 
@@ -33,11 +39,19 @@ public class OldInput : MonoBehaviour
     }
 
     void Look() {
-        if (Input.GetKeyDown(KeyCode.W)) {
-            Debug.Log("Look up");
+        if (Input.GetKey(KeyCode.W)) {
+            lookup = true;
         }
-        if (Input.GetKeyDown(KeyCode.S)) {
-            Debug.Log("Crouch");
+        else if (Input.GetKeyUp(KeyCode.W)) {
+            lookup = false;
+        }
+        if (Input.GetKey(KeyCode.S)) {
+            crouching = true;
+            //Debug.Log(crouching);
+        }
+        else if (Input.GetKeyUp(KeyCode.S)) {
+            crouching = false;
+            //Debug.Log(crouching);
         }
     }
 
