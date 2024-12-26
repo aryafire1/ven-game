@@ -15,6 +15,7 @@ public class NewInput : MonoBehaviour
     InputAction move;
     InputAction attack;
     InputAction jump;
+    InputAction look;
 
     float direction;
     Rigidbody rb;
@@ -36,12 +37,17 @@ public class NewInput : MonoBehaviour
         jump = inputActions.Player.Jump;
         jump.Enable();
         jump.performed += Jump;
+
+        look = inputActions.Player.Look;
+        look.Enable();
+        look.performed += Look;
     }
 
     void OnDisable() {
         move.Disable();
         attack.Disable();
         jump.Disable();
+        look.Disable();
     }
 
 
@@ -72,5 +78,15 @@ public class NewInput : MonoBehaviour
 
     void Jump(InputAction.CallbackContext context) {
         rb.velocity = force * Vector3.up;
+    }
+
+    void Look(InputAction.CallbackContext context) {
+        float looking = look.ReadValue<float>();
+        if (looking > 0) {
+            Debug.Log("look up");
+        }
+        if (looking < 0) {
+            Debug.Log("crouch");
+        }
     }
 }
