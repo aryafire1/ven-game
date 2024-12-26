@@ -34,7 +34,7 @@ public class EventManager : MonoBehaviour
 
 
     void Dash(InputAction.CallbackContext context) {
-        Debug.Log("dash");
+        //Debug.Log("dash");
         DashEvent?.Invoke();
     }
     void Magic(InputAction.CallbackContext context) {

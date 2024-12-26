@@ -137,6 +137,7 @@ GameObject:
   - component: {fileID: 401427287}
   - component: {fileID: 401427286}
   - component: {fileID: 401427285}
+  - component: {fileID: 401427292}
   m_Layer: 0
   m_Name: new test player
   m_TagString: Untagged
@@ -158,6 +159,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 3
   force: 5
+  dashForce: 5
 --- !u!114 &401427286
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -213,7 +215,7 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 0
+  m_Constraints: 112
   m_CollisionDetection: 0
 --- !u!65 &401427288
 BoxCollider:
@@ -301,6 +303,18 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &401427292
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 401427284}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: be0d97f7ed6e9b3438864a0b7ea76ea6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &705507993
 GameObject:
   m_ObjectHideFlags: 0

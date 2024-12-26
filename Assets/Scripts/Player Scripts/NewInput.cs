@@ -10,6 +10,7 @@ public class NewInput : MonoBehaviour
 
     public float speed;
     public float force;
+    public float dashForce;
 
     public InputSystemActions inputActions;
     InputAction move;
@@ -48,6 +49,8 @@ public class NewInput : MonoBehaviour
         attack.Disable();
         jump.Disable();
         look.Disable();
+
+        EventManager.DashEvent -= Dash;
     }
 
 
@@ -56,6 +59,8 @@ public class NewInput : MonoBehaviour
     void Start()
     {
         rb = GetComponent<Rigidbody>();
+
+        EventManager.DashEvent += Dash;
     }
 
     void Update() {
@@ -88,5 +93,13 @@ public class NewInput : MonoBehaviour
         if (looking < 0) {
             Debug.Log("crouch");
         }
+    }
+
+    void Dash() {
+        Debug.Log("dash");
+        if (direction == 0) {
+            direction = 1;
+        }
+        rb.velocity = dashForce * direction * Vector3.right;
     }
 }
