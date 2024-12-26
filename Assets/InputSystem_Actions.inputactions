@@ -49,6 +49,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "Magic",
+                    "type": "Button",
+                    "id": "f90ce70b-04a0-4b3b-9052-21df0b5a007f",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -153,12 +162,12 @@
                 },
                 {
                     "name": "",
-                    "id": "2d08a53b-3784-4b82-aa57-5d079efc4dc4",
+                    "id": "aef31a60-6931-464b-91d2-f22651b0f1e2",
                     "path": "<Mouse>/rightButton",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Attack",
+                    "action": "Magic",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

@@ -1,21 +1,76 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
+using UnityEngine.InputSystem.Composites;
 
 public class NewInput : MonoBehaviour
 {
-    InputAction move, attack, dash, look, jump;
+
+    public float speed;
+    public float force;
+
+    public InputSystemActions inputActions;
+    InputAction move;
+    InputAction attack;
+    InputAction jump;
+
+    float direction;
+    Rigidbody rb;
+
+
+
+    void Awake() {
+        inputActions = new InputSystemActions();
+    }
+
+    void OnEnable() {
+        move = inputActions.Player.Move;
+        move.Enable();
+
+        attack = inputActions.Player.Attack;
+        attack.Enable();
+        attack.performed += Attack;
+
+        jump = inputActions.Player.Jump;
+        jump.Enable();
+        jump.performed += Jump;
+    }
+
+    void OnDisable() {
+        move.Disable();
+        attack.Disable();
+        jump.Disable();
+    }
+
+
 
     // Start is called before the first frame update
     void Start()
     {
-        /*if (InputSystem.actions) {
-            move = InputSystem.actions.FindAction("Player/Move");
-            attack = InputSystem.actions.FindAction("Player/Attack");
-            dash = InputSystem.actions.FindAction("Player/Dash");
-            look = InputSystem.actions.FindAction("Player/Look");
-            jump = InputSystem.actions.FindAction("Player/Jump");
-        }*/
+        rb = GetComponent<Rigidbody>();
+    }
+
+    void Update() {
+        direction = move.ReadValue<float>();
+    }
+
+    void FixedUpdate() {
+        Move();
+    }
+
+
+
+    void Attack(InputAction.CallbackContext context) {
+        Debug.Log("slash");
+    }
+
+    void Move() {
+        transform.Translate(direction * speed * Vector3.right * Time.deltaTime);
+    }
+
+    void Jump(InputAction.CallbackContext context) {
+        rb.velocity = force * Vector3.up;
     }
 }
