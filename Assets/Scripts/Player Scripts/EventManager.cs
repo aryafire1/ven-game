@@ -12,12 +12,13 @@ public class EventManager : MonoBehaviour
     InputAction look;
     InputAction attack;
 
-
     public static event Action DashEvent;
     public static event Action MagicEvent;
     public static event Action LookUp;
     public static event Action LookDown;
     public static event Action AttackEvent;
+
+    
 
 
     void Awake() {
@@ -71,5 +72,18 @@ public class EventManager : MonoBehaviour
         Debug.Log("slash");
         AttackEvent?.Invoke();
     }
+
+    /*public static bool KeyCheck(InputAction.CallbackContext context) {
+        if (context.performed) {
+            isKeyDown = true;
+        }
+        else if (context.canceled) {
+            isKeyDown = false;
+        }
+        else {
+            isKeyDown = false;
+        }
+        return isKeyDown;
+    }*/
 
 }
