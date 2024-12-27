@@ -14,9 +14,7 @@ public class NewInput : MonoBehaviour
 
     public InputSystemActions inputActions;
     InputAction move;
-    InputAction attack;
     InputAction jump;
-    InputAction look;
 
     float direction;
     Rigidbody rb;
@@ -31,24 +29,14 @@ public class NewInput : MonoBehaviour
         move = inputActions.Player.Move;
         move.Enable();
 
-        attack = inputActions.Player.Attack;
-        attack.Enable();
-        attack.performed += Attack;
-
         jump = inputActions.Player.Jump;
         jump.Enable();
         jump.performed += Jump;
-
-        look = inputActions.Player.Look;
-        look.Enable();
-        look.performed += Look;
     }
 
     void OnDisable() {
         move.Disable();
-        attack.Disable();
         jump.Disable();
-        look.Disable();
 
         EventManager.DashEvent -= Dash;
     }
@@ -73,26 +61,12 @@ public class NewInput : MonoBehaviour
 
 
 
-    void Attack(InputAction.CallbackContext context) {
-        Debug.Log("slash");
-    }
-
     void Move() {
         transform.Translate(direction * speed * Vector3.right * Time.deltaTime);
     }
 
     void Jump(InputAction.CallbackContext context) {
         rb.velocity = force * Vector3.up;
-    }
-
-    void Look(InputAction.CallbackContext context) {
-        float looking = look.ReadValue<float>();
-        if (looking > 0) {
-            Debug.Log("look up");
-        }
-        if (looking < 0) {
-            Debug.Log("crouch");
-        }
     }
 
     void Dash() {
