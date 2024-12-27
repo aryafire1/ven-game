@@ -56,8 +56,7 @@ public class EventManager : MonoBehaviour
         Debug.Log("magic call");
         MagicEvent?.Invoke();
     }
-
-        void Look(InputAction.CallbackContext context) {
+    void Look(InputAction.CallbackContext context) {
         float looking = look.ReadValue<float>();
         if (looking > 0) {
             Debug.Log("look up");
@@ -68,7 +67,6 @@ public class EventManager : MonoBehaviour
             LookDown?.Invoke();
         }
     }
-
     void Attack(InputAction.CallbackContext context) {
         Debug.Log("slash");
         AttackEvent?.Invoke();
