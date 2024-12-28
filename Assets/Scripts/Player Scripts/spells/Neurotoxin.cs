@@ -6,9 +6,6 @@ public class Neurotoxin : MonoBehaviour, ISpellbase
 {
     public GameObject player;
 
-    [Range(1, 100)]
-    public float magicRange;
-
     GameObject target;
     GameObject[] targets;
 
@@ -26,7 +23,22 @@ public class Neurotoxin : MonoBehaviour, ISpellbase
         EventManager.MagicEvent -= CastSpell;
 
         targets = GameObject.FindGameObjectsWithTag("Enemy");
-        target = targets[Random.Range(0, targets.Length)];
+
+        //old code that grabbed random enemy
+        //target = targets[Random.Range(0, targets.Length)];
+
+        float shortestDist = Mathf.Infinity;
+        for (int i = 0; i < targets.Length; i++) {
+            float enemyDistance = Vector3.Distance(player.transform.position, targets[i].transform.position);
+            if (enemyDistance < shortestDist) {
+                shortestDist = enemyDistance;
+                target = targets[i];
+            }
+        }
+
+        if (target == null) {
+            Debug.Log("no more enemies");
+        }
 
         StartCoroutine(Poison(5));
     }
