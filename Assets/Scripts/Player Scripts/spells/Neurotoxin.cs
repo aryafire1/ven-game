@@ -6,6 +6,13 @@ public class Neurotoxin : MonoBehaviour, ISpellbase
 {
     public GameObject player;
 
+    [Header("Poison Stuff")]
+    [Range(1, 10)]
+    public int poisonRange;
+    [Tooltip("For edit view only")]
+    public bool showGizmo;
+    [Space(10)]
+
     GameObject target;
     GameObject[] targets;
 
@@ -27,7 +34,7 @@ public class Neurotoxin : MonoBehaviour, ISpellbase
         //old code that grabbed random enemy
         //target = targets[Random.Range(0, targets.Length)];
 
-        float shortestDist = Mathf.Infinity;
+        float shortestDist = poisonRange;
         for (int i = 0; i < targets.Length; i++) {
             float enemyDistance = Vector3.Distance(player.transform.position, targets[i].transform.position);
             if (enemyDistance < shortestDist) {
@@ -56,6 +63,13 @@ public class Neurotoxin : MonoBehaviour, ISpellbase
         else if (seconds >= 0) {
             //loop until count ends
             StartCoroutine(Poison(seconds));
+        }
+    }
+
+    void OnDrawGizmos() {
+        if (showGizmo == true) {
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(player.transform.position, poisonRange);
         }
     }
 

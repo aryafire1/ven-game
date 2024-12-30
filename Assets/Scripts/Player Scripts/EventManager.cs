@@ -73,17 +73,4 @@ public class EventManager : MonoBehaviour
         AttackEvent?.Invoke();
     }
 
-    /*public static bool KeyCheck(InputAction.CallbackContext context) {
-        if (context.performed) {
-            isKeyDown = true;
-        }
-        else if (context.canceled) {
-            isKeyDown = false;
-        }
-        else {
-            isKeyDown = false;
-        }
-        return isKeyDown;
-    }*/
-
 }

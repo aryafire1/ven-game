@@ -857,7 +857,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 7617179329945243010, guid: d063a3ab209d60a42965903b869e2b62, type: 3}
-  magicRange: 100
+  poisonRange: 5
+  showGizmo: 0
 --- !u!1 &962993424
 GameObject:
   m_ObjectHideFlags: 0

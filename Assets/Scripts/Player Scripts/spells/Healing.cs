@@ -1,0 +1,29 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class Healing : MonoBehaviour, ISpellbase
+{
+    public GameObject player;
+
+    bool isCrouching;
+
+
+    public void OnDisable() {
+        EventManager.MagicEvent -= CastSpell;
+        EventManager.LookDown -= SwitchBool;
+    }
+
+    public void Start() {
+        EventManager.MagicEvent += CastSpell;
+        EventManager.LookDown += SwitchBool;
+    }
+
+    public void CastSpell() {
+        Debug.Log($"Crouching: {isCrouching}");
+    }
+
+    void SwitchBool() {
+        isCrouching = !isCrouching;
+    }
+}
