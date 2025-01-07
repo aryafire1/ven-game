@@ -17,17 +17,21 @@ public class Neurotoxin : MonoBehaviour, ISpellbase
     GameObject[] targets;
 
     public void OnDisable() {
-        EventManager.MagicEvent -= CastSpell;
+        EventManager.Poison -= CastSpell;
         Debug.Log("destroyed");
     }
     public void Start()
     {
-        EventManager.MagicEvent += CastSpell;
+        EventManager.Poison += CastSpell;
         //rb = projectile.GetComponent<Rigidbody>();
     }
 
     public void CastSpell() {
-        EventManager.MagicEvent -= CastSpell;
+        //tells coroutine to start
+        bool coStart = true;
+
+        //this disables ability to cast again
+        EventManager.Poison -= CastSpell;
 
         targets = GameObject.FindGameObjectsWithTag("Enemy");
 
@@ -45,9 +49,14 @@ public class Neurotoxin : MonoBehaviour, ISpellbase
 
         if (target == null) {
             Debug.Log("no more enemies");
+            //enables casting
+            EventManager.Poison += CastSpell;
+            coStart = false;
         }
-
+        
+        if (coStart == true) {
         StartCoroutine(Poison(5));
+        }
     }
 
     IEnumerator Poison(int seconds) {
@@ -57,7 +66,8 @@ public class Neurotoxin : MonoBehaviour, ISpellbase
         yield return new WaitForSeconds(1f);
         if (seconds < 0) {
             //end of countdown execution
-            EventManager.MagicEvent += CastSpell;
+            //enables casting
+            EventManager.Poison += CastSpell;
             Destroy(target);
         }
         else if (seconds >= 0) {

@@ -7,16 +7,13 @@ using System;
 public class EventManager : MonoBehaviour
 {
     public InputSystemActions inputActions;
-    InputAction dash;
-    InputAction magic;
-    InputAction look;
-    InputAction attack;
+    InputAction dash, magic, look, attack;
 
-    public static event Action DashEvent;
-    public static event Action MagicEvent;
-    public static event Action LookUp;
-    public static event Action LookDown;
-    public static event Action AttackEvent;
+    //input actions
+    public static event Action DashEvent, MagicEvent, LookUp, LookDown, AttackEvent;
+
+    //combo actions
+    public static event Action Healing, Poison;
 
     
 
@@ -49,6 +46,7 @@ public class EventManager : MonoBehaviour
     }
 
 
+    //input voids
     void Dash(InputAction.CallbackContext context) {
         //Debug.Log("dash");
         DashEvent?.Invoke();
@@ -72,5 +70,19 @@ public class EventManager : MonoBehaviour
         Debug.Log("slash");
         AttackEvent?.Invoke();
     }
+
+
+    void MagicCall() {
+        float looking = look.ReadValue<float>();
+        bool casting = magic.ReadValue<bool>();
+        
+        if (looking < 0 && casting == true) {
+            Healing?.Invoke();
+        }
+        else {
+            Poison?.Invoke();
+        }
+    }
+
 
 }

@@ -10,20 +10,20 @@ public class Healing : MonoBehaviour, ISpellbase
 
 
     public void OnDisable() {
-        EventManager.MagicEvent -= CastSpell;
-        EventManager.LookDown -= SwitchBool;
+        EventManager.Healing -= CastSpell;
+        //EventManager.LookDown -= SwitchBool;
     }
 
     public void Start() {
-        EventManager.MagicEvent += CastSpell;
-        EventManager.LookDown += SwitchBool;
+        EventManager.Healing += CastSpell;
+        //EventManager.LookDown += SwitchBool;
     }
 
     public void CastSpell() {
         Debug.Log($"Crouching: {isCrouching}");
     }
 
-    void SwitchBool() {
+    /*void SwitchBool() {
         isCrouching = !isCrouching;
-    }
+    }*/
 }
