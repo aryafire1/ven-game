@@ -20,7 +20,7 @@ public class Healing : MonoBehaviour, ISpellbase
     }
 
     public void CastSpell() {
-        Debug.Log($"Crouching: {isCrouching}");
+        Debug.Log("healing time wow");
     }
 
     /*void SwitchBool() {

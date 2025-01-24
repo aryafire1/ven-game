@@ -10,7 +10,7 @@ public class EventManager : MonoBehaviour
     InputAction dash, magic, look, attack;
 
     //input actions
-    public static event Action DashEvent, MagicEvent, LookUp, LookDown, AttackEvent;
+    public static event Action DashEvent, LookUp, LookDown, AttackEvent;
 
     //combo actions
     public static event Action Healing, Poison;
@@ -53,7 +53,7 @@ public class EventManager : MonoBehaviour
     }
     void Magic(InputAction.CallbackContext context) {
         Debug.Log("magic call");
-        MagicEvent?.Invoke();
+        MagicCall();
     }
     void Look(InputAction.CallbackContext context) {
         float looking = look.ReadValue<float>();
@@ -74,9 +74,9 @@ public class EventManager : MonoBehaviour
 
     void MagicCall() {
         float looking = look.ReadValue<float>();
-        bool casting = magic.ReadValue<bool>();
+        float casting = magic.ReadValue<float>();
         
-        if (looking < 0 && casting == true) {
+        if (looking < 0 && casting == 1) {
             Healing?.Invoke();
         }
         else {

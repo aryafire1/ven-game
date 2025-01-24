@@ -810,6 +810,7 @@ GameObject:
   - component: {fileID: 849172532}
   - component: {fileID: 849172531}
   - component: {fileID: 849172533}
+  - component: {fileID: 849172534}
   m_Layer: 0
   m_Name: Event Manager
   m_TagString: Untagged
@@ -859,6 +860,19 @@ MonoBehaviour:
   player: {fileID: 7617179329945243010, guid: d063a3ab209d60a42965903b869e2b62, type: 3}
   poisonRange: 5
   showGizmo: 0
+--- !u!114 &849172534
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 849172530}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4912154a07afe5b43849ba73e9a206cd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  player: {fileID: 1733342474}
 --- !u!1 &962993424
 GameObject:
   m_ObjectHideFlags: 0
@@ -1266,6 +1280,11 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1733342474 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7617179329945243010, guid: d063a3ab209d60a42965903b869e2b62, type: 3}
+  m_PrefabInstance: {fileID: 8659371537304348671}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &8659371537304348671
 PrefabInstance:
   m_ObjectHideFlags: 0
