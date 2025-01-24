@@ -5,6 +5,7 @@ using UnityEngine;
 public class Healing : MonoBehaviour, ISpellbase
 {
     public GameObject player;
+    float playerHealth;
 
     public void OnDisable() {
         EventManager.Healing -= CastSpell;
@@ -12,20 +13,25 @@ public class Healing : MonoBehaviour, ISpellbase
 
     public void Start() {
         EventManager.Healing += CastSpell;
+        playerHealth = player.GetComponent<HealthManager>().health;
     }
 
     public void CastSpell() {
-        StartCoroutine(Regen(1));
+        StartCoroutine(Regen(0.1f));
     }
 
-    IEnumerator Regen(int seconds) {
-        //replace this once you set up the health system kk
-        Debug.Log("player health regen variable goes here");
+    IEnumerator Regen(float seconds) {
+            
+        if (playerHealth == 100) {
+            Debug.Log("can't heal past 100 bucko");
+            yield return null;
+        }
 
-        yield return new WaitForSeconds(seconds);
-
-        if (EventManager.inputActions.Player.Magic.ReadValue<float>() > 0) {
-            StartCoroutine(Regen(seconds));
+        else {
+            if (EventManager.casting > 0) {
+                StartCoroutine(Regen(0.1f));
+            }
+            yield return new WaitForSeconds(seconds);
         }
     }
 

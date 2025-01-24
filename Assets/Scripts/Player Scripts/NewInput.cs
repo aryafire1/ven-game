@@ -20,7 +20,6 @@ public class NewInput : MonoBehaviour
     Rigidbody rb;
 
 
-
     void Awake() {
         inputActions = new InputSystemActions();
     }
@@ -53,9 +52,6 @@ public class NewInput : MonoBehaviour
 
     void Update() {
         direction = move.ReadValue<float>();
-    }
-
-    void FixedUpdate() {
         Move();
     }
 

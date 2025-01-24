@@ -46,6 +46,7 @@ public class Neurotoxin : MonoBehaviour, ISpellbase
                 target = targets[i];
             }
         }
+        TempColorChange(target);
 
         if (target == null) {
             Debug.Log("no more enemies");
@@ -68,7 +69,7 @@ public class Neurotoxin : MonoBehaviour, ISpellbase
             //end of countdown execution
             //enables casting
             EventManager.Poison += CastSpell;
-            Destroy(target);
+            target.SetActive(false);
         }
         else if (seconds >= 0) {
             //loop until count ends
@@ -81,6 +82,11 @@ public class Neurotoxin : MonoBehaviour, ISpellbase
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(player.transform.position, poisonRange);
         }
+    }
+
+    void TempColorChange(GameObject _target) {
+        _target = target;
+        _target.GetComponent<Renderer>().material.color = Color.red;
     }
 
 

@@ -6,7 +6,7 @@ using System;
 
 public class EventManager : MonoBehaviour
 {
-    public static InputSystemActions inputActions;
+    InputSystemActions inputActions;
     InputAction dash, magic, look, attack;
 
     //input actions
@@ -15,7 +15,8 @@ public class EventManager : MonoBehaviour
     //combo actions
     public static event Action Healing, Poison;
 
-    
+    public static bool slowPlayer;
+    public static float casting;
 
 
     void Awake() {
@@ -65,6 +66,9 @@ public class EventManager : MonoBehaviour
             Debug.Log("crouch");
             LookDown?.Invoke();
         }
+        if (looking == 0) {
+            slowPlayer = false;
+        }
     }
     void Attack(InputAction.CallbackContext context) {
         Debug.Log("slash");
@@ -74,10 +78,11 @@ public class EventManager : MonoBehaviour
 
     void MagicCall() {
         float looking = look.ReadValue<float>();
-        float casting = magic.ReadValue<float>();
+        casting = magic.ReadValue<float>();
         
         if (looking < 0 && casting > 0) {
             Healing?.Invoke();
+            slowPlayer = true;
         }
         else {
             Poison?.Invoke();
