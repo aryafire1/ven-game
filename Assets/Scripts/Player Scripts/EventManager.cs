@@ -6,7 +6,7 @@ using System;
 
 public class EventManager : MonoBehaviour
 {
-    public InputSystemActions inputActions;
+    public static InputSystemActions inputActions;
     InputAction dash, magic, look, attack;
 
     //input actions
@@ -76,7 +76,7 @@ public class EventManager : MonoBehaviour
         float looking = look.ReadValue<float>();
         float casting = magic.ReadValue<float>();
         
-        if (looking < 0 && casting == 1) {
+        if (looking < 0 && casting > 0) {
             Healing?.Invoke();
         }
         else {

@@ -6,24 +6,28 @@ public class Healing : MonoBehaviour, ISpellbase
 {
     public GameObject player;
 
-    bool isCrouching;
-
-
     public void OnDisable() {
         EventManager.Healing -= CastSpell;
-        //EventManager.LookDown -= SwitchBool;
     }
 
     public void Start() {
         EventManager.Healing += CastSpell;
-        //EventManager.LookDown += SwitchBool;
     }
 
     public void CastSpell() {
-        Debug.Log("healing time wow");
+        StartCoroutine(Regen(1));
     }
 
-    /*void SwitchBool() {
-        isCrouching = !isCrouching;
-    }*/
+    IEnumerator Regen(int seconds) {
+        //replace this once you set up the health system kk
+        Debug.Log("player health regen variable goes here");
+
+        yield return new WaitForSeconds(seconds);
+
+        if (EventManager.inputActions.Player.Magic.ReadValue<float>() > 0) {
+            StartCoroutine(Regen(seconds));
+        }
+    }
+
+    
 }

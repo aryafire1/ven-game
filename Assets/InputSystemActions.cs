@@ -74,12 +74,12 @@ public partial class @InputSystemActions: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": ""Magic"",
-                    ""type"": ""Button"",
+                    ""type"": ""Value"",
                     ""id"": ""f90ce70b-04a0-4b3b-9052-21df0b5a007f"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """",
-                    ""initialStateCheck"": false
+                    ""initialStateCheck"": true
                 }
             ],
             ""bindings"": [
