@@ -78,7 +78,7 @@ public class NewInput : MonoBehaviour
     }
 
     void Jump(InputAction.CallbackContext context) {
-        anim.SetBool("isJumping", true);
+        anim.SetTrigger("isJumping");
         rb.velocity = force * Vector3.up;
         anim.SetBool("isFalling", true);
     }
@@ -94,7 +94,6 @@ public class NewInput : MonoBehaviour
     void OnTriggerEnter(Collider other) {
         if (other.CompareTag("Floor")) {
             anim.SetBool("isFalling", false);
-            anim.SetBool("isJumping", false);
         }
     }
 }
