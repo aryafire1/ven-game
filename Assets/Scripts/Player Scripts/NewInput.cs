@@ -18,10 +18,14 @@ public class NewInput : MonoBehaviour
 
     float direction;
     Rigidbody rb;
+    Animator anim;
+    SpriteRenderer renderer;
 
 
     void Awake() {
         inputActions = new InputSystemActions();
+        anim = GetComponent<Animator>();
+        renderer = GetComponent<SpriteRenderer>();
     }
 
     void OnEnable() {
@@ -52,17 +56,31 @@ public class NewInput : MonoBehaviour
 
     void Update() {
         direction = move.ReadValue<float>();
-        Move();
+        if (direction != 0) {
+            Move();
+        }
+        else {
+            anim.SetBool("isRunning", false);
+        }
     }
 
 
 
     void Move() {
+        if (direction > 0) {
+            renderer.flipX = true;
+        }
+        if (direction < 0) {
+            renderer.flipX = false;
+        }
+        anim.SetBool("isRunning", true);
         transform.Translate(direction * speed * Vector3.right * Time.deltaTime);
     }
 
     void Jump(InputAction.CallbackContext context) {
+        anim.SetBool("isJumping", true);
         rb.velocity = force * Vector3.up;
+        anim.SetBool("isFalling", true);
     }
 
     void Dash() {
@@ -71,5 +89,12 @@ public class NewInput : MonoBehaviour
             direction = 1;
         }
         rb.velocity = dashForce * direction * Vector3.right;
+    }
+
+    void OnTriggerEnter(Collider other) {
+        if (other.CompareTag("Floor")) {
+            anim.SetBool("isFalling", false);
+            anim.SetBool("isJumping", false);
+        }
     }
 }
