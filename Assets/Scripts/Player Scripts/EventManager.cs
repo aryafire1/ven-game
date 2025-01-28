@@ -17,6 +17,7 @@ public class EventManager : MonoBehaviour
 
     public static bool slowPlayer;
     public static float casting;
+    public static float looking;
 
 
     void Awake() {
@@ -45,6 +46,10 @@ public class EventManager : MonoBehaviour
         look.Disable();
         attack.Disable();
     }
+    void Update() {
+        looking = look.ReadValue<float>();
+        casting = magic.ReadValue<float>();
+    }
 
 
     //input voids
@@ -57,7 +62,6 @@ public class EventManager : MonoBehaviour
         MagicCall();
     }
     void Look(InputAction.CallbackContext context) {
-        float looking = look.ReadValue<float>();
         if (looking > 0) {
             Debug.Log("look up");
             LookUp?.Invoke();
@@ -76,10 +80,7 @@ public class EventManager : MonoBehaviour
     }
 
 
-    void MagicCall() {
-        float looking = look.ReadValue<float>();
-        casting = magic.ReadValue<float>();
-        
+    void MagicCall() {        
         if (looking < 0 && casting > 0) {
             Healing?.Invoke();
             slowPlayer = true;

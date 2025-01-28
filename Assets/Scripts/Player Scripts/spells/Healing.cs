@@ -21,7 +21,7 @@ public class Healing : MonoBehaviour, ISpellbase
     }
 
     IEnumerator Regen(float seconds) {
-            
+         
         if (playerHealth.health == 100) {
             Debug.Log("can't heal past 100 bucko");
             yield return null;
@@ -29,11 +29,11 @@ public class Healing : MonoBehaviour, ISpellbase
 
         else {
             if (EventManager.casting > 0) {
+                yield return new WaitForSeconds(seconds);
                 playerHealth.health += seconds;
                 Debug.Log($"health: {playerHealth.health}");
                 StartCoroutine(Regen(seconds));
             }
-            yield return new WaitForSeconds(seconds);
         }
     }
 
