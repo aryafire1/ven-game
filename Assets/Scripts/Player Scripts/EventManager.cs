@@ -15,10 +15,13 @@ public class EventManager : MonoBehaviour
     //combo actions
     public static event Action Healing, Poison;
 
-    public static bool slowPlayer;
+    public bool slowPlayer;
+
+    Animator anim;
 
     void Awake() {
         inputActions = new InputSystemActions();
+        anim = transform.parent.gameObject.GetComponent<Animator>();
     }
     void OnEnable() {
         dash = inputActions.Player.Dash;
@@ -31,7 +34,7 @@ public class EventManager : MonoBehaviour
 
         look = inputActions.Player.Look;
         look.Enable();
-        look.performed += Look;
+        look.started += Look;
 
         attack = inputActions.Player.Attack;
         attack.Enable();
@@ -61,10 +64,15 @@ public class EventManager : MonoBehaviour
         }
         if (LookCheck() < 0) {
             Debug.Log("crouch");
+            anim.SetBool("isCrouching", true);
             LookDown?.Invoke();
         }
         if (LookCheck() == 0) {
             slowPlayer = false;
+        }
+
+        if (context.canceled) {
+            anim.SetBool("isCrouching", false);
         }
     }
     void Attack(InputAction.CallbackContext context) {
