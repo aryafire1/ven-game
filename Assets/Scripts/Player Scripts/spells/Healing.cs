@@ -24,13 +24,11 @@ public class Healing : MonoBehaviour, ISpellbase
             
         if (playerHealth == 100) {
             Debug.Log("can't heal past 100 bucko");
-            yield return new WaitForSeconds(seconds);
+            yield return null;
         }
 
         else {
             if (EventManager.casting > 0) {
-                playerHealth += 0.1f;
-                Debug.Log($"health: {playerHealth}");
                 StartCoroutine(Regen(0.1f));
             }
             yield return new WaitForSeconds(seconds);
