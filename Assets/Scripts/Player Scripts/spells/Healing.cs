@@ -6,6 +6,7 @@ public class Healing : MonoBehaviour, ISpellbase
 {
     public GameObject player;
     HealthManager playerHealth;
+    EventManager eventManager;
 
     public void OnDisable() {
         EventManager.Healing -= CastSpell;
@@ -14,6 +15,7 @@ public class Healing : MonoBehaviour, ISpellbase
     public void Start() {
         EventManager.Healing += CastSpell;
         playerHealth = player.GetComponent<HealthManager>();
+        eventManager = GetComponent<EventManager>();
     }
 
     public void CastSpell() {
@@ -21,19 +23,19 @@ public class Healing : MonoBehaviour, ISpellbase
     }
 
     IEnumerator Regen(float seconds) {
+        yield return new WaitForSeconds(seconds);
             
         if (playerHealth.health == 100) {
             Debug.Log("can't heal past 100 bucko");
-            yield return null;
+            //yield return null;
         }
 
         else {
-            if (EventManager.casting > 0) {
+            if (eventManager.CastCheck() > 0) {
                 playerHealth.health += seconds;
                 Debug.Log($"health: {playerHealth.health}");
                 StartCoroutine(Regen(seconds));
             }
-            yield return new WaitForSeconds(seconds);
         }
     }
 
