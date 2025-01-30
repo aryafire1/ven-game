@@ -4,26 +4,31 @@ using UnityEngine;
 
 public class HealthManager : MonoBehaviour
 {
+    public float startingHealth;
+
+    [HideInInspector]
     public float health;
+
+    HUDManager hud;
 
     // Start is called before the first frame update
     void Start()
     {
-        if (health == 0) {
+        if (startingHealth == 0) {
             health = 100;
         }
-    }
+        else {
+            health = startingHealth;
+        }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
+        hud = GetComponent<HUDManager>();
     }
 
     void OnTriggerEnter(Collider other) {
         if (other.CompareTag("Enemy")) {
             health = health - 20;
-            Debug.Log(health);
+            hud.HealthUpdate();
+            //Debug.Log(health);
         }
     }
 
