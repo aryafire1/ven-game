@@ -56,7 +56,7 @@ public class NewInput : MonoBehaviour
 
     void Update() {
         direction = move.ReadValue<float>();
-        if (direction != 0) {
+        if (direction != 0 && EventManager.slowPlayer == false) {
             Move();
         }
         else {

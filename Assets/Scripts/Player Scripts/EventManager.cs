@@ -15,7 +15,7 @@ public class EventManager : MonoBehaviour
     //combo actions
     public static event Action Healing, Poison;
 
-    public bool slowPlayer;
+    public static bool slowPlayer;
 
     Animator anim;
 
@@ -58,22 +58,7 @@ public class EventManager : MonoBehaviour
         MagicCall();
     }
     void Look(InputAction.CallbackContext context) {
-        if (LookCheck() > 0) {
-            Debug.Log("look up");
-            LookUp?.Invoke();
-        }
-        if (LookCheck() < 0) {
-            Debug.Log("crouch");
-            anim.SetBool("isCrouching", true);
-            LookDown?.Invoke();
-        }
-        if (LookCheck() == 0) {
-            slowPlayer = false;
-        }
-
-        if (context.canceled) {
-            anim.SetBool("isCrouching", false);
-        }
+        StartCoroutine(LookingLoop(LookCheck()));
     }
     void Attack(InputAction.CallbackContext context) {
         Debug.Log("slash");
@@ -101,6 +86,32 @@ public class EventManager : MonoBehaviour
     public float CastCheck() {
         float casting = magic.ReadValue<float>();
         return casting;
+    }
+
+    IEnumerator LookingLoop(float looking) {
+        yield return new WaitForSeconds(0.1f);
+        if (looking > 0) {
+            Debug.Log("look up");
+            //lookup anim bool here
+            LookUp?.Invoke();
+        }
+        if (looking < 0) {
+            //Debug.Log("crouch");
+            anim.SetBool("isCrouching", true);
+            LookDown?.Invoke();
+        }
+        if (looking == 0) {
+            slowPlayer = false;
+        }
+
+        if (looking != 0) {
+            slowPlayer = true;
+            StartCoroutine(LookingLoop(LookCheck()));
+        }
+        else {
+            //lookup anim bool here
+            anim.SetBool("isCrouching", false);
+        }
     }
 
 
