@@ -4,8 +4,6 @@ using UnityEngine;
 
 public class Neurotoxin : MonoBehaviour, ISpellbase
 {
-    public GameObject player;
-
     [Header("Poison Stuff")]
     [Range(1, 10)]
     public int poisonRange;
@@ -40,7 +38,7 @@ public class Neurotoxin : MonoBehaviour, ISpellbase
 
         float shortestDist = poisonRange;
         for (int i = 0; i < targets.Length; i++) {
-            float enemyDistance = Vector3.Distance(player.transform.position, targets[i].transform.position);
+            float enemyDistance = Vector3.Distance(transform.parent.position, targets[i].transform.position);
             if (enemyDistance < shortestDist) {
                 shortestDist = enemyDistance;
                 target = targets[i];
@@ -80,7 +78,7 @@ public class Neurotoxin : MonoBehaviour, ISpellbase
     void OnDrawGizmos() {
         if (showGizmo == true) {
         Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(player.transform.position, poisonRange);
+        Gizmos.DrawWireSphere(transform.parent.position, poisonRange);
         }
     }
 

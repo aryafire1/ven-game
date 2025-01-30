@@ -10,7 +10,7 @@ public class EventManager : MonoBehaviour
     InputAction dash, magic, look, attack;
 
     //input actions
-    public static event Action DashEvent, LookUp, LookDown, AttackEvent;
+    public static event Action DashEvent, AttackEvent;
 
     //combo actions
     public static event Action Healing, Poison;
@@ -54,14 +54,14 @@ public class EventManager : MonoBehaviour
         DashEvent?.Invoke();
     }
     void Magic(InputAction.CallbackContext context) {
-        Debug.Log("magic call");
+        //Debug.Log("magic call");
         MagicCall();
     }
     void Look(InputAction.CallbackContext context) {
         StartCoroutine(LookingLoop(LookCheck()));
     }
     void Attack(InputAction.CallbackContext context) {
-        Debug.Log("slash");
+        //Debug.Log("slash");
         AttackEvent?.Invoke();
     }
 
@@ -91,14 +91,12 @@ public class EventManager : MonoBehaviour
     IEnumerator LookingLoop(float looking) {
         yield return new WaitForSeconds(0.1f);
         if (looking > 0) {
-            Debug.Log("look up");
-            //lookup anim bool here
-            LookUp?.Invoke();
+            //Debug.Log("look up");
+            anim.SetBool("isLooking", true);
         }
         if (looking < 0) {
             //Debug.Log("crouch");
             anim.SetBool("isCrouching", true);
-            LookDown?.Invoke();
         }
         if (looking == 0) {
             slowPlayer = false;
@@ -109,7 +107,7 @@ public class EventManager : MonoBehaviour
             StartCoroutine(LookingLoop(LookCheck()));
         }
         else {
-            //lookup anim bool here
+            anim.SetBool("isLooking", false);
             anim.SetBool("isCrouching", false);
         }
     }
