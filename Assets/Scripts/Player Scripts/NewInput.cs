@@ -8,15 +8,15 @@ using UnityEngine.InputSystem.Composites;
 public class NewInput : MonoBehaviour
 {
 
-    public float speed;
+    public float speed, sprintSpeed;
     public float force;
     public float dashForce;
 
     public InputSystemActions inputActions;
-    InputAction move;
-    InputAction jump;
+    InputAction move, jump, sprint;
 
-    float direction;
+    float direction, sprinting;
+    bool jumping;
     Rigidbody rb;
     Animator anim;
     SpriteRenderer renderer;
@@ -31,6 +31,10 @@ public class NewInput : MonoBehaviour
     void OnEnable() {
         move = inputActions.Player.Move;
         move.Enable();
+
+        sprint = inputActions.Player.Sprint;
+        sprint.Enable();
+        sprint.performed += Sprint;
 
         jump = inputActions.Player.Jump;
         jump.Enable();
@@ -56,6 +60,8 @@ public class NewInput : MonoBehaviour
 
     void Update() {
         direction = move.ReadValue<float>();
+        sprinting = sprint.ReadValue<float>();
+
         if (direction != 0 && EventManager.slowPlayer == false) {
             Move();
         }
@@ -74,13 +80,19 @@ public class NewInput : MonoBehaviour
             renderer.flipX = false;
         }
         anim.SetBool("isRunning", true);
+        
         transform.Translate(direction * speed * Vector3.right * Time.deltaTime);
+    }
+
+    void Sprint(InputAction.CallbackContext context) {
+        StartCoroutine(SprintingLoop());
     }
 
     void Jump(InputAction.CallbackContext context) {
         anim.SetTrigger("isJumping");
         rb.velocity = force * Vector3.up;
         anim.SetBool("isFalling", true);
+        jumping = true;
     }
 
     void Dash() {
@@ -94,6 +106,26 @@ public class NewInput : MonoBehaviour
     void OnTriggerEnter(Collider other) {
         if (other.CompareTag("Floor")) {
             anim.SetBool("isFalling", false);
+            jumping = false;
+
+            if (anim.GetBool("isRunning") == true) {
+                StartCoroutine(SprintingLoop());
+            }
+        }
+    }
+
+
+    IEnumerator SprintingLoop() {
+        yield return new WaitForSeconds(0.1f);
+
+        if (sprinting > 0 && jumping == false && EventManager.slowPlayer == false) { //<- good god
+            rb.velocity = direction * sprintSpeed * Vector3.right;
+            anim.SetBool("isSprinting", true);
+
+            StartCoroutine(SprintingLoop());
+        }
+        else {
+            anim.SetBool("isSprinting", false);
         }
     }
 }
