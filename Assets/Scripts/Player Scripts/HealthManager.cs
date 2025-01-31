@@ -10,6 +10,7 @@ public class HealthManager : MonoBehaviour
     public float health;
 
     HUDManager hud;
+    bool hurting;
 
     // Start is called before the first frame update
     void Start()
@@ -28,12 +29,20 @@ public class HealthManager : MonoBehaviour
 
     void OnTriggerEnter(Collider other) {
         if (other.CompareTag("Enemy")) {
-            Damage(20);
+            StartCoroutine(Damage(1));
             //Debug.Log(health);
+            hurting = true;
+
+            DeathCheck();
+        }
+    }
+    void OnTriggerExit(Collider other) {
+        if (other.CompareTag("Enemy")) {
+            hurting = false;
         }
     }
 
-    void Death() {
+    void DeathCheck() {
         if (health <= 0) {
             this.gameObject.SetActive(false);
             Debug.Log("you died idiot");
@@ -41,7 +50,11 @@ public class HealthManager : MonoBehaviour
     }
 
     IEnumerator Damage(float damage) {
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(0.1f);
         health = health - damage;
+
+        if (hurting == true) {
+            StartCoroutine(Damage(damage));
+        }
     }
 }
