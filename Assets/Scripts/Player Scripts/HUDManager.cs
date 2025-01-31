@@ -14,14 +14,14 @@ public class HUDManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        mask = healthBar.transform.GetChild(0).gameObject.GetComponent<Slider>();
+        mask = healthBar.GetComponent<Slider>();
         healthManager = GetComponent<HealthManager>();
         
-        mask.maxValue = healthManager.startingHealth; //you are the problem
+        mask.maxValue = healthManager.startingHealth;
         mask.value = mask.maxValue;
     }
 
-    public void HealthUpdate() {
-        mask.value = (healthManager.health/healthManager.startingHealth) * 100;
+    public void HealthUpdate(float health, float startingHealth) {
+        mask.value = health/startingHealth * 100;
     }
 }

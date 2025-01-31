@@ -66,9 +66,7 @@ public class EventManager : MonoBehaviour
     }
 
 
-    void MagicCall() {
-        CastCheck();
-        
+    void MagicCall() {      
         if (LookCheck() < 0 && CastCheck() > 0) {
             Healing?.Invoke();
             slowPlayer = true;

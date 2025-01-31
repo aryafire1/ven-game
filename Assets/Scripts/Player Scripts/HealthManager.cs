@@ -14,20 +14,21 @@ public class HealthManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        if (startingHealth == 0) {
-            health = 100;
-        }
-        else {
-            health = startingHealth;
-        }
-
         hud = GetComponent<HUDManager>();
+
+        if (startingHealth == 0) {
+            startingHealth = 100;
+        }
+            health = startingHealth;
     }
+
+    void Update() {
+        hud.HealthUpdate(health, startingHealth);
+    }    
 
     void OnTriggerEnter(Collider other) {
         if (other.CompareTag("Enemy")) {
             health = health - 20;
-            hud.HealthUpdate();
             //Debug.Log(health);
         }
     }
