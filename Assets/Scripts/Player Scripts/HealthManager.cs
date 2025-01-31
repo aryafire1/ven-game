@@ -28,7 +28,7 @@ public class HealthManager : MonoBehaviour
 
     void OnTriggerEnter(Collider other) {
         if (other.CompareTag("Enemy")) {
-            health = health - 20;
+            Damage(20);
             //Debug.Log(health);
         }
     }
@@ -38,5 +38,10 @@ public class HealthManager : MonoBehaviour
             this.gameObject.SetActive(false);
             Debug.Log("you died idiot");
         }
+    }
+
+    IEnumerator Damage(float damage) {
+        yield return new WaitForSeconds(1f);
+        health = health - damage;
     }
 }

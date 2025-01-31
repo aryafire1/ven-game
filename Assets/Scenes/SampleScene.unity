@@ -122,6 +122,11 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &641956812 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7202880857772355553, guid: 89a4fa5a62827ef45aca70bcdc6be2db, type: 3}
+  m_PrefabInstance: {fileID: 7543367934275230216}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &705507993
 GameObject:
   m_ObjectHideFlags: 0
@@ -788,6 +793,10 @@ PrefabInstance:
       propertyPath: healthBar
       value: 
       objectReference: {fileID: 1435802114}
+    - target: {fileID: 8960487364114756795, guid: d063a3ab209d60a42965903b869e2b62, type: 3}
+      propertyPath: healthTextBox
+      value: 
+      objectReference: {fileID: 641956812}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
