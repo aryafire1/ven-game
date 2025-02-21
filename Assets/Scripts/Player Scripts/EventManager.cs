@@ -13,7 +13,7 @@ public class EventManager : MonoBehaviour
     public static event Action DashEvent, AttackEvent;
 
     //combo actions
-    public static event Action Healing, Poison;
+    public static event Action Healing, Poison, Neurotoxin, Teleport;
 
     public static bool slowPlayer;
 
@@ -21,7 +21,9 @@ public class EventManager : MonoBehaviour
 
     void Awake() {
         inputActions = new InputSystemActions();
-        anim = transform.parent.gameObject.GetComponent<Animator>();
+    }
+    void Start() {
+        anim = AnimManager.anim.playerAnimator;
     }
     void OnEnable() {
         dash = inputActions.Player.Dash;
@@ -90,11 +92,11 @@ public class EventManager : MonoBehaviour
         yield return new WaitForSeconds(0.1f);
         if (looking > 0) {
             //Debug.Log("look up");
-            anim.SetBool("isLooking", true);
+            anim.SetBool(AnimManager.anim.boolNames[4], true);
         }
         if (looking < 0) {
             //Debug.Log("crouch");
-            anim.SetBool("isCrouching", true);
+            anim.SetBool(AnimManager.anim.boolNames[3], true);
         }
         if (looking == 0) {
             slowPlayer = false;
@@ -105,8 +107,8 @@ public class EventManager : MonoBehaviour
             StartCoroutine(LookingLoop(LookCheck()));
         }
         else {
-            anim.SetBool("isLooking", false);
-            anim.SetBool("isCrouching", false);
+            anim.SetBool(AnimManager.anim.boolNames[4], false);
+            anim.SetBool(AnimManager.anim.boolNames[3], false);
         }
     }
 

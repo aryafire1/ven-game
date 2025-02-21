@@ -18,13 +18,12 @@ public class NewInput : MonoBehaviour
     float direction, sprinting;
     bool jumping;
     Rigidbody rb;
-    Animator anim;
     SpriteRenderer renderer;
+    Animator anim;
 
 
     void Awake() {
         inputActions = new InputSystemActions();
-        anim = GetComponent<Animator>();
         renderer = GetComponent<SpriteRenderer>();
     }
 
@@ -54,7 +53,7 @@ public class NewInput : MonoBehaviour
     void Start()
     {
         rb = GetComponent<Rigidbody>();
-
+        anim = AnimManager.anim.playerAnimator;
         EventManager.DashEvent += Dash;
     }
 
@@ -66,7 +65,7 @@ public class NewInput : MonoBehaviour
             Move();
         }
         else {
-            anim.SetBool("isRunning", false);
+            anim.SetBool(AnimManager.anim.boolNames[0], false);
         }
     }
 
@@ -79,7 +78,7 @@ public class NewInput : MonoBehaviour
         if (direction < 0) {
             renderer.flipX = false;
         }
-        anim.SetBool("isRunning", true);
+        anim.SetBool(AnimManager.anim.boolNames[0], true);
         
         transform.Translate(direction * speed * Vector3.right * Time.deltaTime);
     }
@@ -89,14 +88,14 @@ public class NewInput : MonoBehaviour
     }
 
     void Jump(InputAction.CallbackContext context) {
-        anim.SetTrigger("isJumping");
+        anim.SetTrigger(AnimManager.anim.boolNames[2]);
         rb.velocity = force * Vector3.up;
-        anim.SetBool("isFalling", true);
+        anim.SetBool(AnimManager.anim.boolNames[1], true);
         jumping = true;
     }
 
     void Dash() {
-        Debug.Log("dash");
+        //Debug.Log("dash");
         if (direction == 0) {
             direction = 1;
         }
@@ -105,7 +104,7 @@ public class NewInput : MonoBehaviour
 
     void OnTriggerEnter(Collider other) {
         if (other.CompareTag("Floor")) {
-            anim.SetBool("isFalling", false);
+            anim.SetBool(AnimManager.anim.boolNames[1], false);
             jumping = false;
 
             if (anim.GetBool("isRunning") == true) {
@@ -120,12 +119,12 @@ public class NewInput : MonoBehaviour
 
         if (sprinting > 0 && jumping == false && EventManager.slowPlayer == false) { //<- good god
             rb.velocity = direction * sprintSpeed * Vector3.right;
-            anim.SetBool("isSprinting", true);
+            anim.SetBool(AnimManager.anim.boolNames[5], true);
 
             StartCoroutine(SprintingLoop());
         }
         else {
-            anim.SetBool("isSprinting", false);
+            anim.SetBool(AnimManager.anim.boolNames[5], false);
         }
     }
 }
