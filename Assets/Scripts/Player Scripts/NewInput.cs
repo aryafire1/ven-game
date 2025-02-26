@@ -35,7 +35,6 @@ public class NewInput : MonoBehaviour
     void OnEnable() {
         move = inputActions.Player.Move;
         move.Enable();
-        move.performed += MoveInput;
 
         sprint = inputActions.Player.Sprint;
         sprint.Enable();
@@ -94,7 +93,13 @@ public class NewInput : MonoBehaviour
 
     void Jump(InputAction.CallbackContext context) {
         anim.SetTrigger(AnimManager.anim.boolNames[2]);
-        rb.velocity = force * Vector3.up;
+
+        if (jumping == false) {
+            rb.velocity = rb.velocity + (force * Vector3.up);
+        }
+        else {
+            rb.velocity = force * Vector3.up;
+        }
         anim.SetBool(AnimManager.anim.boolNames[1], true);
         jumping = true;
     }
@@ -104,7 +109,7 @@ public class NewInput : MonoBehaviour
         if (direction == 0) {
             direction = 1;
         }
-        rb.velocity = dashForce * direction * Vector3.right;
+        rb.velocity = rb.velocity + (dashForce * direction * Vector3.right);
     }
 
 #endregion
@@ -124,7 +129,7 @@ public class NewInput : MonoBehaviour
 
 
     IEnumerator SprintingLoop() {
-        yield return new WaitForSeconds(0.1f);
+        yield return new WaitForSeconds(Time.deltaTime);
 
         if (sprinting > 0 && jumping == false && EventManager.slowPlayer == false) { //<- good god
             rb.velocity = direction * sprintSpeed * Vector3.right;
@@ -136,4 +141,6 @@ public class NewInput : MonoBehaviour
             anim.SetBool(AnimManager.anim.boolNames[5], false);
         }
     }
+
+#endregion
 }
