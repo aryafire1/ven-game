@@ -6,6 +6,8 @@ using System;
 
 public class EventManager : MonoBehaviour
 {
+#region Variables
+
     InputSystemActions inputActions;
     InputAction dash, magic, look, attack;
 
@@ -18,12 +20,16 @@ public class EventManager : MonoBehaviour
     public static bool slowPlayer;
 
     Animator anim;
+    
+#endregion
+
+#region Init
 
     void Awake() {
         inputActions = new InputSystemActions();
     }
     void Start() {
-        anim = AnimManager.anim.playerAnimator;
+        anim = transform.parent.gameObject.GetComponent<Animator>();
     }
     void OnEnable() {
         dash = inputActions.Player.Dash;
@@ -49,8 +55,10 @@ public class EventManager : MonoBehaviour
         attack.Disable();
     }
 
+#endregion
 
-    //input voids
+#region Input Voids
+
     void Dash(InputAction.CallbackContext context) {
         //Debug.Log("dash");
         DashEvent?.Invoke();
@@ -67,6 +75,9 @@ public class EventManager : MonoBehaviour
         AttackEvent?.Invoke();
     }
 
+#endregion
+
+#region Callback Voids
 
     void MagicCall() {      
         if (LookCheck() < 0 && CastCheck() > 0) {
@@ -89,7 +100,7 @@ public class EventManager : MonoBehaviour
     }
 
     IEnumerator LookingLoop(float looking) {
-        yield return new WaitForSeconds(0.1f);
+        yield return new WaitForSeconds(Time.deltaTime);
         if (looking > 0) {
             //Debug.Log("look up");
             anim.SetBool(AnimManager.anim.boolNames[4], true);
@@ -112,5 +123,6 @@ public class EventManager : MonoBehaviour
         }
     }
 
+#endregion
 
 }

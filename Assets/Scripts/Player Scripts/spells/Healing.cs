@@ -22,7 +22,7 @@ public class Healing : MonoBehaviour, ISpellbase
 
     public void CastSpell() {
         Debug.Log("Healing time");
-        StartCoroutine(Regen(0.1f));
+        StartCoroutine(Regen(Time.deltaTime));
     }
 
     IEnumerator Regen(float seconds) {
@@ -37,7 +37,7 @@ public class Healing : MonoBehaviour, ISpellbase
             if (eventManager.CastCheck() > 0) {
                 playerHealth.health += healthToRegain;
                 //hud.HealthUpdate(playerHealth.health, playerHealth.startingHealth);
-                Debug.Log($"health: {playerHealth.health}");
+                //Debug.Log($"health: {playerHealth.health}");
                 StartCoroutine(Regen(seconds));
             }
         }

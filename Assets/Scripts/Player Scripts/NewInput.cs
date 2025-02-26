@@ -8,6 +8,8 @@ using UnityEngine.InputSystem.Composites;
 public class NewInput : MonoBehaviour
 {
 
+#region Variables
+
     public float speed, sprintSpeed;
     public float force;
     public float dashForce;
@@ -21,6 +23,9 @@ public class NewInput : MonoBehaviour
     SpriteRenderer renderer;
     Animator anim;
 
+#endregion
+
+#region Init
 
     void Awake() {
         inputActions = new InputSystemActions();
@@ -30,6 +35,7 @@ public class NewInput : MonoBehaviour
     void OnEnable() {
         move = inputActions.Player.Move;
         move.Enable();
+        move.performed += MoveInput;
 
         sprint = inputActions.Player.Sprint;
         sprint.Enable();
@@ -47,13 +53,10 @@ public class NewInput : MonoBehaviour
         EventManager.DashEvent -= Dash;
     }
 
-
-
-    // Start is called before the first frame update
     void Start()
     {
         rb = GetComponent<Rigidbody>();
-        anim = AnimManager.anim.playerAnimator;
+        anim = GetComponent<Animator>();
         EventManager.DashEvent += Dash;
     }
 
@@ -69,7 +72,9 @@ public class NewInput : MonoBehaviour
         }
     }
 
+#endregion
 
+#region Input Voids
 
     void Move() {
         if (direction > 0) {
@@ -101,6 +106,10 @@ public class NewInput : MonoBehaviour
         }
         rb.velocity = dashForce * direction * Vector3.right;
     }
+
+#endregion
+
+#region Misc
 
     void OnTriggerEnter(Collider other) {
         if (other.CompareTag("Floor")) {
