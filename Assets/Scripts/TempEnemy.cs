@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TempEnemy : MonoBehaviour
+public class TempEnemy : Enemy
 {
     public float speed;
     GameObject player;
