@@ -95,7 +95,7 @@ public partial class @InputSystemActions: IInputActionCollection2, IDisposable
                 {
                     ""name"": ""Back/Forth"",
                     ""id"": ""1ea1f5e0-a96e-4072-aea0-69ef953f5b3f"",
-                    ""path"": ""1DAxis"",
+                    ""path"": ""1DAxis(whichSideWins=1)"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",

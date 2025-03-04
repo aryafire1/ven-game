@@ -67,7 +67,7 @@ public class NewInput : MonoBehaviour
             Move();
         }
         else {
-            anim.SetBool(AnimManager.anim.boolNames[0], false);
+            anim.SetBool("isRunning", false);
         }
     }
 
@@ -82,7 +82,7 @@ public class NewInput : MonoBehaviour
         if (direction < 0) {
             renderer.flipX = false;
         }
-        anim.SetBool(AnimManager.anim.boolNames[0], true);
+        anim.SetBool("isRunning", true);
         
         transform.Translate(direction * speed * Vector3.right * Time.deltaTime);
     }
@@ -92,7 +92,7 @@ public class NewInput : MonoBehaviour
     }
 
     void Jump(InputAction.CallbackContext context) {
-        anim.SetTrigger(AnimManager.anim.boolNames[2]);
+        anim.SetTrigger("isJumping");
 
         if (jumping == false) {
             rb.velocity = rb.velocity + (force * Vector3.up);
@@ -100,7 +100,7 @@ public class NewInput : MonoBehaviour
         else {
             rb.velocity = force * Vector3.up;
         }
-        anim.SetBool(AnimManager.anim.boolNames[1], true);
+        anim.SetBool("isFalling", true);
         jumping = true;
     }
 
@@ -118,7 +118,7 @@ public class NewInput : MonoBehaviour
 
     void OnTriggerEnter(Collider other) {
         if (other.CompareTag("Floor")) {
-            anim.SetBool(AnimManager.anim.boolNames[1], false);
+            anim.SetBool("isFalling", false);
             jumping = false;
 
             if (anim.GetBool("isRunning") == true) {
@@ -133,12 +133,12 @@ public class NewInput : MonoBehaviour
 
         if (sprinting > 0 && jumping == false && EventManager.slowPlayer == false) { //<- good god
             rb.velocity = direction * sprintSpeed * Vector3.right;
-            anim.SetBool(AnimManager.anim.boolNames[5], true);
+            anim.SetBool("isSprinting", true);
 
             StartCoroutine(SprintingLoop());
         }
         else {
-            anim.SetBool(AnimManager.anim.boolNames[5], false);
+            anim.SetBool("isSprinting", false);
         }
     }
 

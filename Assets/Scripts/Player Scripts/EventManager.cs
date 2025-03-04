@@ -103,11 +103,11 @@ public class EventManager : MonoBehaviour
         yield return new WaitForSeconds(Time.deltaTime);
         if (looking > 0) {
             //Debug.Log("look up");
-            anim.SetBool(AnimManager.anim.boolNames[4], true);
+            anim.SetBool("isLooking", true);
         }
         if (looking < 0) {
             //Debug.Log("crouch");
-            anim.SetBool(AnimManager.anim.boolNames[3], true);
+            anim.SetBool("isCrouching", true);
         }
         if (looking == 0) {
             slowPlayer = false;
@@ -118,8 +118,8 @@ public class EventManager : MonoBehaviour
             StartCoroutine(LookingLoop(LookCheck()));
         }
         else {
-            anim.SetBool(AnimManager.anim.boolNames[4], false);
-            anim.SetBool(AnimManager.anim.boolNames[3], false);
+            anim.SetBool("isLooking", false);
+            anim.SetBool("isCrouching", false);
         }
     }
 
