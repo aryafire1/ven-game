@@ -22,7 +22,7 @@ public class Healing : MonoBehaviour, ISpellbase
 
     public void CastSpell() {
         Debug.Log("Healing time");
-        StartCoroutine(Regen(Time.deltaTime));
+        StartCoroutine(Regen(0.1f));
     }
 
     IEnumerator Regen(float seconds) {
