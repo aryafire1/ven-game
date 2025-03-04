@@ -15,7 +15,7 @@ public class EventManager : MonoBehaviour
     public static event Action DashEvent, AttackEvent;
 
     //combo actions
-    public static event Action Healing, Poison, Neurotoxin, Teleport;
+    public static event Action Healing, Poison;
 
     public static bool slowPlayer;
 
