@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1124217690991095801}
-  - component: {fileID: 7466034762369326057}
+  - component: {fileID: 3785857628450406387}
   - component: {fileID: 2037948995494141831}
   m_Layer: 0
   m_Name: attack
@@ -33,8 +33,8 @@ Transform:
   m_Children: []
   m_Father: {fileID: 3262725938131965244}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!65 &7466034762369326057
-BoxCollider:
+--- !u!135 &3785857628450406387
+SphereCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -50,9 +50,9 @@ BoxCollider:
   m_LayerOverridePriority: 0
   m_IsTrigger: 1
   m_ProvidesContacts: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 3
-  m_Size: {x: 0.25, y: 0.25, z: 1}
+  m_Radius: 0.5
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &2037948995494141831
 MonoBehaviour:
@@ -66,8 +66,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d26fc0422dfdcac4599e67197271c4e2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damageBox: {fileID: 7466034762369326057}
-  damage: 0
+  damageBox: {fileID: 3785857628450406387}
+  damage: 1
+  attackTime: 0
 --- !u!1 &7617179329945243010
 GameObject:
   m_ObjectHideFlags: 0
@@ -102,7 +103,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0.21075147, y: -0.063866295, z: 0.035513636}
-  m_LocalScale: {x: 5, y: 5, z: 0}
+  m_LocalScale: {x: 3, y: 3, z: 0}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 6311116350127139392}
@@ -293,7 +294,7 @@ Animator:
   m_GameObject: {fileID: 7617179329945243010}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 95f1cc4c77ff49e45842568777afd6b6, type: 2}
+  m_Controller: {fileID: 9100000, guid: 215e4a6a32f853a4a9933e67cf42dbaa, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -368,6 +369,10 @@ PrefabInstance:
       propertyPath: player
       value: 
       objectReference: {fileID: 7617179329945243010}
+    - target: {fileID: 6576672202121485467, guid: f16be03afc7a47446bd5d8728419790d, type: 3}
+      propertyPath: poisonRange
+      value: 2
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

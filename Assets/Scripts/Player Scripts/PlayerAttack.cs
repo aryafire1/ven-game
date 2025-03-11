@@ -7,24 +7,24 @@ public class PlayerAttack : MonoBehaviour
     public Collider damageBox;
     public float damage;
 
+    bool attacking;
+
     void OnEnable()
     {
-        damageBox.enabled = false;
-        EventManager.AttackEvent += EnableCollider;
+        EventManager.AttackEvent += Damage;
     }
 
     void OnDisable() {
-        EventManager.AttackEvent -= EnableCollider;
+        EventManager.AttackEvent -= Damage;
     }
 
     void OnTriggerEnter(Collider other) {
-        if (other.CompareTag("Enemy")) {
-            Debug.Log("enemy damaged");
+        if (other.CompareTag("Enemy") && other.gameObject.GetComponent<Enemy>() != null) {
+            other.gameObject.GetComponent<Enemy>().TakeDamage(damage);
         }
     }
 
-    void EnableCollider() {
-        damageBox.enabled = true;
-        damageBox.enabled = false;
+    void Damage() {
+        transform.parent.GetComponent<Animator>().SetTrigger("attack");
     }
 }

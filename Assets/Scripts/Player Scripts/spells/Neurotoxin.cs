@@ -12,6 +12,7 @@ public class Neurotoxin : MonoBehaviour, ISpellbase
     [Space(10)]
 
     GameObject target;
+    Enemy targetScript;
     GameObject[] targets;
 
     public void OnDisable() {
@@ -33,18 +34,15 @@ public class Neurotoxin : MonoBehaviour, ISpellbase
 
         targets = GameObject.FindGameObjectsWithTag("Enemy");
 
-        //old code that grabbed random enemy
-        //target = targets[Random.Range(0, targets.Length)];
-
         float shortestDist = poisonRange;
         for (int i = 0; i < targets.Length; i++) {
             float enemyDistance = Vector3.Distance(transform.parent.position, targets[i].transform.position);
             if (enemyDistance < shortestDist) {
                 shortestDist = enemyDistance;
                 target = targets[i];
+                targetScript = target.GetComponent<Enemy>();
             }
         }
-        TempColorChange(target);
 
         if (target == null) {
             Debug.Log("no more enemies");
@@ -54,7 +52,9 @@ public class Neurotoxin : MonoBehaviour, ISpellbase
         }
         
         if (coStart == true) {
-        StartCoroutine(Poison(5));
+            TempColorChange(target);
+            targetScript.poisoned = true;
+            StartCoroutine(Poison(5));
         }
     }
 
@@ -67,7 +67,8 @@ public class Neurotoxin : MonoBehaviour, ISpellbase
             //end of countdown execution
             //enables casting
             EventManager.Poison += CastSpell;
-            target.SetActive(false);
+            targetScript.PoisonDamage();
+            targetScript.poisoned = false;
         }
         else if (seconds >= 0) {
             //loop until count ends
