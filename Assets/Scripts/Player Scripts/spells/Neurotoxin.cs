@@ -32,18 +32,22 @@ public class Neurotoxin : MonoBehaviour, ISpellbase
         //this disables ability to cast again
         EventManager.Poison -= CastSpell;
 
-        targets = GameObject.FindGameObjectsWithTag("Enemy");
+        //checks if i already haven't assigned the target so it's not searching through every object
+        if (target == null) {
+            targets = GameObject.FindGameObjectsWithTag("Enemy");
 
-        float shortestDist = poisonRange;
-        for (int i = 0; i < targets.Length; i++) {
-            float enemyDistance = Vector3.Distance(transform.parent.position, targets[i].transform.position);
-            if (enemyDistance < shortestDist) {
-                shortestDist = enemyDistance;
-                target = targets[i];
-                targetScript = target.GetComponent<Enemy>();
+            float shortestDist = poisonRange;
+            for (int i = 0; i < targets.Length; i++) {
+                float enemyDistance = Vector3.Distance(transform.parent.position, targets[i].transform.position);
+                if (enemyDistance < shortestDist) {
+                    shortestDist = enemyDistance;
+                    target = targets[i];
+                    targetScript = target.GetComponent<Enemy>();
+                }
             }
         }
 
+        //if it's still null after all that then no spell for u
         if (target == null) {
             Debug.Log("no more enemies");
             //enables casting

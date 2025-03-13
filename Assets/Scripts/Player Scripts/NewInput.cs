@@ -11,17 +11,20 @@ public class NewInput : MonoBehaviour
 #region Variables
 
     public float speed, sprintSpeed;
-    public float force;
-    public float dashForce;
+    public float force, dashForce;
 
     public InputSystemActions inputActions;
     InputAction move, jump, sprint;
 
     float direction, sprinting;
-    bool jumping;
+    int jumping;
     Rigidbody rb;
     SpriteRenderer renderer;
     Animator anim;
+
+    Vector3 playerWidth;
+    [HideInInspector]
+    public bool inBounds;
 
 #endregion
 
@@ -57,6 +60,7 @@ public class NewInput : MonoBehaviour
         rb = GetComponent<Rigidbody>();
         anim = GetComponent<Animator>();
         EventManager.DashEvent += Dash;
+        playerWidth = renderer.size;
     }
 
     void Update() {
@@ -76,15 +80,16 @@ public class NewInput : MonoBehaviour
 #region Input Voids
 
     void Move() {
-        if (direction > 0) {
-            renderer.flipX = true;
+        else {
+            if (direction > 0) {
+                renderer.flipX = true;
+            }
+            if (direction < 0) {
+                renderer.flipX = false;
+            }
+            anim.SetBool("isRunning", true);
+            transform.Translate(direction * speed * Vector3.right * Time.deltaTime);
         }
-        if (direction < 0) {
-            renderer.flipX = false;
-        }
-        anim.SetBool("isRunning", true);
-        
-        transform.Translate(direction * speed * Vector3.right * Time.deltaTime);
     }
 
     void Sprint(InputAction.CallbackContext context) {
@@ -92,16 +97,12 @@ public class NewInput : MonoBehaviour
     }
 
     void Jump(InputAction.CallbackContext context) {
-        anim.SetTrigger("isJumping");
-
-        if (jumping == false) {
+        if (jumping < 2) {
+            anim.SetTrigger("isJumping");
             rb.velocity = rb.velocity + (force * Vector3.up);
+            anim.SetBool("isFalling", true);
+            jumping++;
         }
-        else {
-            rb.velocity = force * Vector3.up;
-        }
-        anim.SetBool("isFalling", true);
-        jumping = true;
     }
 
     void Dash() {
@@ -119,7 +120,7 @@ public class NewInput : MonoBehaviour
     void OnTriggerEnter(Collider other) {
         if (other.CompareTag("Floor")) {
             anim.SetBool("isFalling", false);
-            jumping = false;
+            jumping = 0;
 
             if (anim.GetBool("isRunning") == true) {
                 StartCoroutine(SprintingLoop());
@@ -131,7 +132,7 @@ public class NewInput : MonoBehaviour
     IEnumerator SprintingLoop() {
         yield return new WaitForSeconds(Time.deltaTime);
 
-        if (sprinting > 0 && jumping == false && EventManager.slowPlayer == false) { //<- good god
+        if (sprinting > 0 && jumping == 0 && EventManager.slowPlayer == false) { //<- good god
             rb.velocity = direction * sprintSpeed * Vector3.right;
             anim.SetBool("isSprinting", true);
 
