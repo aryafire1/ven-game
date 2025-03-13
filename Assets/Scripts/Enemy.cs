@@ -2,13 +2,17 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.UI;
 
 public class Enemy : MonoBehaviour
 {
 
     public float health;
+    float maxHealth;
     public float damage;
+    public Slider slider;
     public UnityEvent<float> Event_Damage;
+    Rigidbody rb;
 
     [HideInInspector]
     public bool damaging, poisoned;
@@ -16,11 +20,13 @@ public class Enemy : MonoBehaviour
     float poisonDamage;
 
     // Start is called before the first frame update
-    void Start()
+    public void Start()
     {
         if (Event_Damage == null) {
             Event_Damage = new UnityEvent<float>();
         }
+        maxHealth = health;
+        rb = gameObject.GetComponent<Rigidbody>();
     }
 
     void OnDisable() {
@@ -31,10 +37,9 @@ public class Enemy : MonoBehaviour
     public void TakeDamage(float d) {
         if (!poisoned) {
             health = health - d;
-            //knockback goes here
+            slider.value = health / maxHealth;
         }
         else {
-            Debug.Log($"poison damage: {poisonDamage}");
             poisonDamage = poisonDamage + d;
         }
 
@@ -44,7 +49,8 @@ public class Enemy : MonoBehaviour
     }
 
     public void PoisonDamage() {
-        health = health - (poisonDamage * 2);
+        poisoned = false;
+        TakeDamage(poisonDamage * 2);
         poisonDamage = 0;
     }
 }

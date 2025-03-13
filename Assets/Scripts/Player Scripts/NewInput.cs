@@ -80,7 +80,6 @@ public class NewInput : MonoBehaviour
 #region Input Voids
 
     void Move() {
-        else {
             if (direction > 0) {
                 renderer.flipX = true;
             }
@@ -89,7 +88,6 @@ public class NewInput : MonoBehaviour
             }
             anim.SetBool("isRunning", true);
             transform.Translate(direction * speed * Vector3.right * Time.deltaTime);
-        }
     }
 
     void Sprint(InputAction.CallbackContext context) {

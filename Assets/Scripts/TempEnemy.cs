@@ -10,6 +10,7 @@ public class TempEnemy : Enemy
     // Start is called before the first frame update
     void Start()
     {
+        base.Start();
         player = GameObject.FindGameObjectWithTag("Player");
     }
 
