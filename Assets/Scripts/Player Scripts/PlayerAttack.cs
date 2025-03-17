@@ -6,8 +6,13 @@ public class PlayerAttack : MonoBehaviour
 {
     public Collider damageBox;
     public float damage;
+    public float tickTime;
 
     bool attacking;
+
+    void Start() {
+        damageBox.enabled = false;
+    }
 
     void OnEnable()
     {
@@ -26,5 +31,12 @@ public class PlayerAttack : MonoBehaviour
 
     void Damage() {
         transform.parent.GetComponent<Animator>().SetTrigger("attack");
+        StartCoroutine(Damage_Enum());
+    }
+
+    IEnumerator Damage_Enum() {
+        damageBox.enabled = true;
+        yield return new WaitForSeconds(tickTime);
+        damageBox.enabled = false;
     }
 }

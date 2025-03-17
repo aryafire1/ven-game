@@ -50,7 +50,7 @@ SphereCollider:
   m_LayerOverridePriority: 0
   m_IsTrigger: 1
   m_ProvidesContacts: 0
-  m_Enabled: 0
+  m_Enabled: 1
   serializedVersion: 3
   m_Radius: 0.5
   m_Center: {x: 0, y: 0, z: 0}
@@ -68,7 +68,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   damageBox: {fileID: 3785857628450406387}
   damage: 1
-  attackTime: 0
+  tickTime: 0.1
 --- !u!1 &7617179329945243010
 GameObject:
   m_ObjectHideFlags: 0
@@ -256,6 +256,7 @@ MonoBehaviour:
   sprintSpeed: 2
   force: 5
   dashForce: 7
+  inBounds: 0
 --- !u!114 &5715640701719794758
 MonoBehaviour:
   m_ObjectHideFlags: 0
