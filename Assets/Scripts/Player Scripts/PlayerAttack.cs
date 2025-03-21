@@ -9,18 +9,20 @@ public class PlayerAttack : MonoBehaviour
     public float tickTime;
 
     bool attacking;
+    Animator anim;
 
     void Start() {
         damageBox.enabled = false;
+        anim = transform.parent.GetComponent<Animator>();
     }
 
     void OnEnable()
     {
-        EventManager.AttackEvent += Damage;
+        PlayerInput.AttackEvent += Damage;
     }
 
     void OnDisable() {
-        EventManager.AttackEvent -= Damage;
+        PlayerInput.AttackEvent -= Damage;
     }
 
     void OnTriggerEnter(Collider other) {
@@ -30,7 +32,7 @@ public class PlayerAttack : MonoBehaviour
     }
 
     void Damage() {
-        transform.parent.GetComponent<Animator>().SetTrigger("attack");
+        anim.SetTrigger("attack");
         StartCoroutine(Damage_Enum());
     }
 

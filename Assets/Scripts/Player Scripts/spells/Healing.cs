@@ -6,17 +6,17 @@ public class Healing : MonoBehaviour, ISpellbase
 {
     public int healthToRegain;
     HealthManager playerHealth;
-    EventManager eventManager;
+    PlayerInput eventManager;
     HUDManager hud;
 
     public void OnDisable() {
-        EventManager.Healing -= CastSpell;
+        PlayerInput.Healing -= CastSpell;
     }
 
     public void Start() {
-        EventManager.Healing += CastSpell;
+        PlayerInput.Healing += CastSpell;
         playerHealth = transform.parent.gameObject.GetComponent<HealthManager>();
-        eventManager = GetComponent<EventManager>();
+        eventManager = transform.parent.gameObject.GetComponent<PlayerInput>();
         hud = transform.parent.gameObject.GetComponent<HUDManager>();
     }
 
@@ -33,14 +33,12 @@ public class Healing : MonoBehaviour, ISpellbase
             //yield return null;
         }
 
-        else {
-            if (eventManager.CastCheck() > 0) {
+        else if (eventManager.CastCheck() > 0) {
                 playerHealth.health += healthToRegain;
                 //hud.HealthUpdate(playerHealth.health, playerHealth.startingHealth);
                 //Debug.Log($"health: {playerHealth.health}");
                 StartCoroutine(Regen(seconds));
             }
-        }
     }
 
     

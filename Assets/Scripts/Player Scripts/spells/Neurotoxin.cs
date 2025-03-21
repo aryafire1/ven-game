@@ -16,12 +16,12 @@ public class Neurotoxin : MonoBehaviour, ISpellbase
     GameObject[] targets;
 
     public void OnDisable() {
-        EventManager.Poison -= CastSpell;
+        PlayerInput.Poison -= CastSpell;
         Debug.Log("destroyed");
     }
     public void Start()
     {
-        EventManager.Poison += CastSpell;
+        PlayerInput.Poison += CastSpell;
         //rb = projectile.GetComponent<Rigidbody>();
     }
 
@@ -30,7 +30,7 @@ public class Neurotoxin : MonoBehaviour, ISpellbase
         bool coStart = true;
 
         //this disables ability to cast again
-        EventManager.Poison -= CastSpell;
+        PlayerInput.Poison -= CastSpell;
 
         //checks if i already haven't assigned the target so it's not searching through every object
         if (target == null) {
@@ -51,7 +51,7 @@ public class Neurotoxin : MonoBehaviour, ISpellbase
         if (target == null) {
             Debug.Log("no more enemies");
             //enables casting
-            EventManager.Poison += CastSpell;
+            PlayerInput.Poison += CastSpell;
             coStart = false;
         }
         
@@ -70,7 +70,7 @@ public class Neurotoxin : MonoBehaviour, ISpellbase
         if (seconds < 0) {
             //end of countdown execution
             //enables casting
-            EventManager.Poison += CastSpell;
+            PlayerInput.Poison += CastSpell;
             targetScript.PoisonDamage();
             targetScript.poisoned = false;
         }
@@ -88,7 +88,6 @@ public class Neurotoxin : MonoBehaviour, ISpellbase
     }
 
     void TempColorChange(GameObject _target) {
-        _target = target;
         _target.GetComponent<Renderer>().material.color = Color.red;
     }
 

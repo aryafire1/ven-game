@@ -82,7 +82,7 @@ GameObject:
   - component: {fileID: 4960625940996666016}
   - component: {fileID: 7617017056116947598}
   - component: {fileID: 871689691842809534}
-  - component: {fileID: 5005806651437041099}
+  - component: {fileID: 9184977547571612694}
   - component: {fileID: 5715640701719794758}
   - component: {fileID: 8960487364114756795}
   - component: {fileID: 6339852230928456009}
@@ -240,7 +240,7 @@ MonoBehaviour:
   m_DefaultActionMap: Player
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
---- !u!114 &5005806651437041099
+--- !u!114 &9184977547571612694
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -249,7 +249,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 7617179329945243010}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 339b3200e11d5f7409cb249574e4a2f9, type: 3}
+  m_Script: {fileID: 11500000, guid: ecc982e7e3cf5034aad8d1c47e86fb41, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 3
@@ -374,7 +374,8 @@ PrefabInstance:
       propertyPath: poisonRange
       value: 2
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 7284731172976131798, guid: f16be03afc7a47446bd5d8728419790d, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
