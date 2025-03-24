@@ -13,6 +13,7 @@ public class Enemy : MonoBehaviour
     public Slider slider;
     public UnityEvent<float> Event_Damage;
     Rigidbody rb;
+    Renderer renderer;
 
     [HideInInspector]
     public bool damaging, poisoned;
@@ -27,6 +28,7 @@ public class Enemy : MonoBehaviour
         }
         maxHealth = health;
         rb = gameObject.GetComponent<Rigidbody>();
+        renderer = gameObject.GetComponent<Renderer>();
     }
 
     void OnDisable() {
@@ -38,13 +40,15 @@ public class Enemy : MonoBehaviour
         if (!poisoned) {
             health = health - d;
             slider.value = health / maxHealth;
+            StartCoroutine(DamageFlash());
         }
         else {
             poisonDamage = poisonDamage + d;
         }
 
         if (health <= 0) {
-            gameObject.SetActive(false);
+            //gameObject.SetActive(false);
+            Destroy(gameObject);
         }
     }
 
@@ -52,5 +56,11 @@ public class Enemy : MonoBehaviour
         poisoned = false;
         TakeDamage(poisonDamage * 2);
         poisonDamage = 0;
+    }
+
+    IEnumerator DamageFlash() {
+        renderer.material.color = Color.red;
+        yield return new WaitForSeconds(0.1f);
+        renderer.material.color = Color.white;
     }
 }
