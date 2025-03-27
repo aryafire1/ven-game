@@ -2,26 +2,25 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Healing : MonoBehaviour, ISpellbase
+public class Healing : Spellbase
 {
     public int healthToRegain;
     HealthManager playerHealth;
     PlayerInput eventManager;
     HUDManager hud;
 
-    public void OnDisable() {
+    public override void OnDisable() {
         PlayerInput.Healing -= CastSpell;
     }
 
-    public void Start() {
+    public override void Start() {
         PlayerInput.Healing += CastSpell;
         playerHealth = transform.parent.gameObject.GetComponent<HealthManager>();
         eventManager = transform.parent.gameObject.GetComponent<PlayerInput>();
         hud = transform.parent.gameObject.GetComponent<HUDManager>();
     }
 
-    public void CastSpell() {
-        Debug.Log("Healing time");
+    public override void CastSpell() {
         StartCoroutine(Regen(0.1f));
     }
 

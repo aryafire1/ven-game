@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Neurotoxin : MonoBehaviour, ISpellbase
+public class Neurotoxin : Spellbase
 {
     [Header("Poison Stuff")]
     [Range(1, 10)]
@@ -15,17 +15,16 @@ public class Neurotoxin : MonoBehaviour, ISpellbase
     Enemy targetScript;
     GameObject[] targets;
 
-    public void OnDisable() {
+    public override void OnDisable() {
         PlayerInput.Poison -= CastSpell;
-        Debug.Log("destroyed");
     }
-    public void Start()
+    public override void Start()
     {
         PlayerInput.Poison += CastSpell;
         //rb = projectile.GetComponent<Rigidbody>();
     }
 
-    public void CastSpell() {
+    public override void CastSpell() {
         //tells coroutine to start
         bool coStart = true;
 
