@@ -27,7 +27,9 @@ public class PlayerInput : MonoBehaviour
     Animator anim;
 
     //input actions
-    public static event Action DashEvent, AttackEvent;
+    public static event Action DashEvent, AttackEvent, InteractEvent;
+    [HideInInspector]
+    public bool interacting;
 
     //combo actions
     public static event Action Healing, Poison, Neurotoxin, Teleport;
@@ -149,7 +151,12 @@ public class PlayerInput : MonoBehaviour
     }
     void Attack(InputAction.CallbackContext context) {
         //Debug.Log("slash");
-        AttackEvent?.Invoke();
+        if (interacting) {
+            InteractEvent?.Invoke();
+        }
+        else {
+            AttackEvent?.Invoke();
+        }
     }
 
 #endregion
