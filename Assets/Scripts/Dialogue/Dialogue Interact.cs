@@ -7,6 +7,7 @@ using TMPro;
 public class DialogueInteract : MonoBehaviour
 {
     public DialogueData[] sentences;
+    public string animBoolTag;
     public TMP_Text text;
     public float typingSpeed;
     public GameObject popup, playerTextBox, npcTextBox, nextIndicator;
@@ -17,8 +18,7 @@ public class DialogueInteract : MonoBehaviour
 
 #region mono
 
-    void Start() {
-        PlayerInput.InteractEvent += StartText;
+    public virtual void Start() {
         nextIndicator.SetActive(false);
         playerTextBox.SetActive(false);
         npcTextBox.SetActive(false);
@@ -32,12 +32,14 @@ public class DialogueInteract : MonoBehaviour
     }
     void OnTriggerEnter(Collider other) {
         if (other.CompareTag("Player")) {
+            PlayerInput.InteractEvent += StartText;
             popup.SetActive(true);
             other.gameObject.GetComponent<PlayerInput>().interacting = true;
         }
     }
     void OnTriggerExit(Collider other) {
         if (other.CompareTag("Player")) {
+            PlayerInput.InteractEvent -= StartText;
             popup.SetActive(false);
             other.gameObject.GetComponent<PlayerInput>().interacting = false;
         }
@@ -47,13 +49,15 @@ public class DialogueInteract : MonoBehaviour
 
 #region typing voids
 
-    void StartText() {
+    public virtual void StartText() {
         PlayerInput.InteractEvent -= StartText;
         PlayerInput.InteractEvent += TypeSkip;
 
         StartCoroutine(Typing());
 
-        anim.SetBool("talk", true);
+        if (anim != null) {
+        anim.SetBool(animBoolTag, true);
+        }
     }
 
     IEnumerator Typing() {
@@ -75,7 +79,7 @@ public class DialogueInteract : MonoBehaviour
         nextIndicator.SetActive(true);
     }
 
-    void TypeSkip() {
+    public virtual void TypeSkip() {
         nextIndicator.SetActive(true);
 
         if (text.text != sentences[index].text) {
@@ -100,7 +104,9 @@ public class DialogueInteract : MonoBehaviour
                 text.text = "";
                 index = 0;
 
-                anim.SetBool("talk", false);
+                if (anim != null) {
+                anim.SetBool(animBoolTag, false);
+                }
             }
         }
     }
