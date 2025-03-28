@@ -9,8 +9,8 @@ public class DialogueInteract : MonoBehaviour
     public DialogueData[] sentences;
     public TMP_Text text;
     public float typingSpeed;
-    public GameObject popup, textBox, nextIndicator;
-    public Image sprite;
+    public GameObject popup, playerTextBox, npcTextBox, nextIndicator;
+    public Image playerSprite, npcSprite;
 
     int index;
     Animator anim;
@@ -20,7 +20,8 @@ public class DialogueInteract : MonoBehaviour
     void Start() {
         PlayerInput.InteractEvent += StartText;
         nextIndicator.SetActive(false);
-        textBox.SetActive(false);
+        playerTextBox.SetActive(false);
+        npcTextBox.SetActive(false);
         popup.SetActive(false);
 
         text.text = "";
@@ -50,16 +51,23 @@ public class DialogueInteract : MonoBehaviour
         PlayerInput.InteractEvent -= StartText;
         PlayerInput.InteractEvent += TypeSkip;
 
-        textBox.SetActive(true);
-
         StartCoroutine(Typing());
 
         anim.SetBool("talk", true);
     }
 
     IEnumerator Typing() {
-        sprite.sprite = sentences[index].image;
-
+        if (sentences[index].player) {
+            playerTextBox.SetActive(true);
+            npcTextBox.SetActive(false);
+            playerSprite.sprite = sentences[index].image;
+        }
+        else {
+            npcTextBox.SetActive(true);
+            playerTextBox.SetActive(false);
+            npcSprite.sprite = sentences[index].image;
+        }
+        
         foreach(char letter in sentences[index].text) {
             text.text += letter;
             yield return new WaitForSeconds(typingSpeed);
@@ -76,16 +84,19 @@ public class DialogueInteract : MonoBehaviour
         }
         else if (text.text == sentences[index].text) {
             if (index < sentences.Length - 1) {
+                //moves to next chunk
                 nextIndicator.SetActive(false);
                 index++;
                 text.text = "";
                 StartCoroutine(Typing());
             }
             else {
+                //dialogue ends here
                 PlayerInput.InteractEvent += StartText;
                 PlayerInput.InteractEvent -= TypeSkip;
 
-                textBox.SetActive(false);
+                playerTextBox.SetActive(false);
+                npcTextBox.SetActive(false);
                 text.text = "";
                 index = 0;
 
