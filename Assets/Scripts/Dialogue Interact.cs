@@ -6,10 +6,11 @@ using TMPro;
 
 public class DialogueInteract : MonoBehaviour
 {
-    public string[] sentences;
+    public DialogueData[] sentences;
     public TMP_Text text;
     public float typingSpeed;
     public GameObject popup, textBox, nextIndicator;
+    public Image sprite;
 
     int index;
     Animator anim;
@@ -57,7 +58,9 @@ public class DialogueInteract : MonoBehaviour
     }
 
     IEnumerator Typing() {
-        foreach(char letter in sentences[index]) {
+        sprite.sprite = sentences[index].image;
+
+        foreach(char letter in sentences[index].text) {
             text.text += letter;
             yield return new WaitForSeconds(typingSpeed);
         }
@@ -67,11 +70,11 @@ public class DialogueInteract : MonoBehaviour
     void TypeSkip() {
         nextIndicator.SetActive(true);
 
-        if (text.text != sentences[index]) {
+        if (text.text != sentences[index].text) {
             StopAllCoroutines();
-            text.text = sentences[index];
+            text.text = sentences[index].text;
         }
-        else if (text.text == sentences[index]) {
+        else if (text.text == sentences[index].text) {
             if (index < sentences.Length - 1) {
                 nextIndicator.SetActive(false);
                 index++;
@@ -84,6 +87,7 @@ public class DialogueInteract : MonoBehaviour
 
                 textBox.SetActive(false);
                 text.text = "";
+                index = 0;
 
                 anim.SetBool("talk", false);
             }
