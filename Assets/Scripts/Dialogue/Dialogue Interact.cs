@@ -52,6 +52,7 @@ public class DialogueInteract : MonoBehaviour
     public virtual void StartText() {
         PlayerInput.InteractEvent -= StartText;
         PlayerInput.InteractEvent += TypeSkip;
+        PlayerInput.slowPlayer = true;
 
         StartCoroutine(Typing());
 
@@ -98,6 +99,7 @@ public class DialogueInteract : MonoBehaviour
                 //dialogue ends here
                 PlayerInput.InteractEvent += StartText;
                 PlayerInput.InteractEvent -= TypeSkip;
+                PlayerInput.slowPlayer = false;
 
                 playerTextBox.SetActive(false);
                 npcTextBox.SetActive(false);

@@ -12,6 +12,6 @@ public class DialogueChange1 : DialogueInteract
             base.sentences = nextGroup;
         }
         base.StartText();
-        cycle++;
+        cycle = 1;
     }
 }
