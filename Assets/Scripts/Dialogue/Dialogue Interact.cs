@@ -13,7 +13,9 @@ public class DialogueInteract : MonoBehaviour
     public GameObject popup, playerTextBox, npcTextBox, nextIndicator;
     public Image playerSprite, npcSprite;
 
+    [SerializeField]
     int index;
+    public int Index { get {return index;} }
     Animator anim;
 
 #region mono
@@ -62,6 +64,8 @@ public class DialogueInteract : MonoBehaviour
     }
 
     IEnumerator Typing() {
+        text.text = "";
+
         if (sentences[index].player) {
             playerTextBox.SetActive(true);
             npcTextBox.SetActive(false);
@@ -92,7 +96,6 @@ public class DialogueInteract : MonoBehaviour
                 //moves to next chunk
                 nextIndicator.SetActive(false);
                 index++;
-                text.text = "";
                 StartCoroutine(Typing());
             }
             else {
@@ -100,10 +103,10 @@ public class DialogueInteract : MonoBehaviour
                 PlayerInput.InteractEvent += StartText;
                 PlayerInput.InteractEvent -= TypeSkip;
                 PlayerInput.slowPlayer = false;
+                text.text = "";
 
                 playerTextBox.SetActive(false);
                 npcTextBox.SetActive(false);
-                text.text = "";
                 index = 0;
 
                 if (anim != null) {

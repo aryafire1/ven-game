@@ -8,33 +8,44 @@ public class YesNo : DialogueInteract
     public DialogueData[] yesData;
     public DialogueData[] noData;
     DialogueData[] baseData;
+    public GameObject choiceObject;
     bool yes, no;
 
     public override void Start() {
         baseData = base.sentences;
+        choiceObject.SetActive(false);
         base.Start();
     }
 
     public override void StartText() {
-        if (yes) {
-            base.sentences = yesData;
-            yes = false;
-        }
-        else if (no) {
-            base.sentences = noData;
-            no = false;
-        }
-        else {
-            base.sentences = baseData;
-        }
+        yes = false;
+        no = false;
+        base.sentences = baseData;
         base.StartText();
+    }
+
+    public override void TypeSkip() {
+        choiceObject.SetActive(false);
+
+        if (yes == false && no == false && base.text.text == base.sentences[base.Index].text) {
+            if (base.Index >= base.sentences.Length - 1) {
+                choiceObject.SetActive(true);
+            }
+        }
+        base.TypeSkip();
     }
 
     //button ui voids
     public void Yes() {
         yes = true;
+        base.sentences = yesData;
+        choiceObject.SetActive(false);
+        TypeSkip();
     }
     public void No() {
         no = true;
+        base.sentences = noData;
+        choiceObject.SetActive(false);
+        TypeSkip();
     }
 }
