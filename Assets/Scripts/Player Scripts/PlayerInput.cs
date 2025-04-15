@@ -19,7 +19,7 @@ public class PlayerInput : MonoBehaviour
 
     //input system
     public InputSystemActions inputActions;
-    InputAction move, jump, sprint, dash, magic, look, attack;
+    InputAction move, jump, sprint, dash, magic, look, attack, interact;
 
     //needed components
     Rigidbody rb;
@@ -76,6 +76,10 @@ public class PlayerInput : MonoBehaviour
         attack = inputActions.Player.Attack;
         attack.Enable();
         attack.performed += Attack;
+
+        interact = inputActions.Player.Interact;
+        interact.Enable();
+        interact.performed += Interact;
     }
 
     void OnDisable() {
@@ -85,6 +89,7 @@ public class PlayerInput : MonoBehaviour
         magic.Disable();
         look.Disable();
         attack.Disable();
+        interact.Disable();
     }
 
     void Start()
@@ -151,12 +156,13 @@ public class PlayerInput : MonoBehaviour
     }
     void Attack(InputAction.CallbackContext context) {
         //Debug.Log("slash");
-        if (interacting) {
-            InteractEvent?.Invoke();
-        }
+        if (interacting) {}
         else {
             AttackEvent?.Invoke();
         }
+    }
+    void Interact(InputAction.CallbackContext context) {
+        InteractEvent?.Invoke();
     }
 
 #endregion

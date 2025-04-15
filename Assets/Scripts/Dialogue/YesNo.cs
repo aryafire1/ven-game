@@ -18,9 +18,6 @@ public class YesNo : DialogueInteract
     }
 
     public override void StartText() {
-        yes = false;
-        no = false;
-        base.sentences = baseData;
         base.StartText();
     }
 
@@ -32,6 +29,14 @@ public class YesNo : DialogueInteract
                 choiceObject.SetActive(true);
             }
         }
+        if (base.Index >= base.sentences.Length - 1) {
+            if (yes || no) {
+                base.sentences = baseData;
+                yes = false;
+                no = false;
+                base.Reset();
+            }
+        }
         base.TypeSkip();
     }
 
@@ -40,12 +45,12 @@ public class YesNo : DialogueInteract
         yes = true;
         base.sentences = yesData;
         choiceObject.SetActive(false);
-        TypeSkip();
+        Invoke("StartText", 0.01f);
     }
     public void No() {
         no = true;
         base.sentences = noData;
         choiceObject.SetActive(false);
-        TypeSkip();
+        Invoke("StartText", 0.01f);
     }
 }

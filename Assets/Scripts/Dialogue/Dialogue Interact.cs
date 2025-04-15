@@ -56,6 +56,7 @@ public class DialogueInteract : MonoBehaviour
         PlayerInput.InteractEvent += TypeSkip;
         PlayerInput.slowPlayer = true;
 
+        text.gameObject.SetActive(true);
         StartCoroutine(Typing());
 
         if (anim != null) {
@@ -100,19 +101,24 @@ public class DialogueInteract : MonoBehaviour
             }
             else {
                 //dialogue ends here
-                PlayerInput.InteractEvent += StartText;
-                PlayerInput.InteractEvent -= TypeSkip;
-                PlayerInput.slowPlayer = false;
-                text.text = "";
-
-                playerTextBox.SetActive(false);
-                npcTextBox.SetActive(false);
-                index = 0;
-
-                if (anim != null) {
-                anim.SetBool(animBoolTag, false);
-                }
+                Reset();
             }
+        }
+    }
+
+    public void Reset() {
+        PlayerInput.InteractEvent += StartText;
+        PlayerInput.InteractEvent -= TypeSkip;
+        PlayerInput.slowPlayer = false;
+        text.text = "";
+
+        playerTextBox.SetActive(false);
+        npcTextBox.SetActive(false);
+        text.gameObject.SetActive(false);
+        index = 0;
+
+        if (anim != null) {
+        anim.SetBool(animBoolTag, false);
         }
     }
 
