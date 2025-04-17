@@ -266,6 +266,7 @@ GameObject:
   - component: {fileID: 106035198}
   - component: {fileID: 106035200}
   - component: {fileID: 106035199}
+  - component: {fileID: 106035201}
   m_Layer: 5
   m_Name: yes/no
   m_TagString: Untagged
@@ -333,6 +334,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 106035197}
   m_CullTransparentMesh: 1
+--- !u!114 &106035201
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 106035197}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 59359f6c17a02554d85025e88f983c9e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &335492953
 GameObject:
   m_ObjectHideFlags: 0
@@ -522,6 +535,7 @@ MonoBehaviour:
   nextIndicator: {fileID: 2749988460926459450}
   playerSprite: {fileID: 6108292577051779098}
   npcSprite: {fileID: 1005545343623097004}
+  index: 0
   nextGroup:
   - text: sprited by @carlacid on tumblr
     image: {fileID: 21300000, guid: ba50ace73fce3474a8fc7cf99d79c55a, type: 3}
@@ -4003,6 +4017,7 @@ MonoBehaviour:
   nextIndicator: {fileID: 4233854795513873756}
   playerSprite: {fileID: 5200888813946289020}
   npcSprite: {fileID: 1232910184665477578}
+  index: 0
   nextGroup:
   - text: don't talk to me
     image: {fileID: 21300000, guid: 55ce4d6f589aa1e44885478d695e1697, type: 3}
@@ -4818,6 +4833,7 @@ MonoBehaviour:
   nextIndicator: {fileID: 3216168141892320345}
   playerSprite: {fileID: 6795641230044234361}
   npcSprite: {fileID: 540324359419021519}
+  index: 0
   yesData:
   - text: Uhhhh, sure.
     image: {fileID: 21300000, guid: 5b05e1ea48ce42745bf9f1ebe941cb9b, type: 3}
