@@ -5,10 +5,18 @@ using UnityEngine.EventSystems;
 
 public class YesNoLock : MonoBehaviour
 {
+    public DialogueInteract dialogue;
+
     void OnEnable() {
-        PlayerInput.slowPlayer = true;
+        StartCoroutine(Freeze(true));
     }
     void OnDisable() {
-        PlayerInput.slowPlayer = false;
+        StartCoroutine(Freeze(false));
+    }
+
+    IEnumerator Freeze(bool b) {
+        yield return new WaitForSeconds(0.1f);
+        PlayerInput.slowPlayer = b;
+        PlayerInput.InteractEvent -= dialogue.StartText;
     }
 }

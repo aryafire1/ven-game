@@ -24,19 +24,22 @@ public class YesNo : DialogueInteract
     public override void TypeSkip() {
         choiceObject.SetActive(false);
 
+
         if (yes == false && no == false && base.text.text == base.sentences[base.Index].text) {
             if (base.Index >= base.sentences.Length - 1) {
                 choiceObject.SetActive(true);
             }
         }
-        if (base.Index >= base.sentences.Length - 1) {
-            if (yes || no) {
+        if (yes || no && base.text.text == base.sentences[base.Index].text) {
+            if (base.Index >= base.sentences.Length - 1) {
                 base.sentences = baseData;
                 yes = false;
                 no = false;
                 base.Reset();
+                return;
             }
         }
+
         base.TypeSkip();
     }
 

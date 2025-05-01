@@ -52,6 +52,10 @@ public class DialogueInteract : MonoBehaviour
 #region typing voids
 
     public virtual void StartText() {
+        if (index != 0) {
+            index = 0;
+        }
+
         PlayerInput.InteractEvent -= StartText;
         PlayerInput.InteractEvent += TypeSkip;
         PlayerInput.slowPlayer = true;
@@ -115,6 +119,7 @@ public class DialogueInteract : MonoBehaviour
         playerTextBox.SetActive(false);
         npcTextBox.SetActive(false);
         text.gameObject.SetActive(false);
+        nextIndicator.SetActive(false);
         index = 0;
 
         if (anim != null) {
